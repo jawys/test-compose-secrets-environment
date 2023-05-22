@@ -1,0 +1,20 @@
+version: "3.8"
+
+secrets:
+  api_pass:
+    environment: SOME_API_PASS
+
+services:
+  backend:
+    image: node:alpine
+    environment:
+      - API_PASS_FILE=/run/secrets/api_pass
+    secrets:
+      - source: api_pass
+    command:
+      - sh
+      - -c
+      - set -x; ls -la /run/secrets; id
+    user: node
+
+name: test-compose-secrets-environment
